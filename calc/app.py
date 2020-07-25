@@ -54,3 +54,23 @@ def do_math4():
     b = request.args["b"]
     result = div(int(a), int(b))
     return f"{result}"
+
+
+# *****************
+# A MORE DRY WAY
+# *****************
+operators = {
+    "add": add,
+    "sub": sub,
+    "mult": mult,
+    "div": div,
+}
+
+
+@app.route('/math/<operator>')
+def do_math(operator):
+    a = int(request.args["a"])
+    b = int(request.args["b"])
+    oper = operators.get(operator, "Operator not found")
+    result = oper(a, b)
+    return str(result)
